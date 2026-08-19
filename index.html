@@ -1,0 +1,1321 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Clash Verge &amp; Shadowrocket 上手教程 · AI悦创</title>
+  <meta name="description" content="从下载安装到订阅配置，一次讲清 Windows、macOS、iPhone 与安卓四端的上网代理设置。">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;1,9..144,400&family=Caveat:wght@400;700&family=Noto+Serif+SC:wght@700;900&family=Noto+Sans+SC:wght@400;500;700&family=Fira+Code:wght@400&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --blue: #2B7FD8;
+      --blue-deep: #1E5BA8;
+      --yellow: #F4D758;
+      --yellow-soft: #FFF3CD;
+      --red: #E84A5F;
+      --cream: #fefcf6;
+      --cream-dark: #faf6eb;
+      --ink: #1A1A2E;
+      --ink-light: #4A4A5A;
+      --ink-faint: #8A8A9A;
+      --dark-panel: #151821;
+      --serif: 'Noto Serif SC', 'Songti SC', serif;
+      --sans: 'Noto Sans SC', -apple-system, 'PingFang SC', 'Helvetica Neue', sans-serif;
+      --display: 'Fraunces', Georgia, serif;
+      --hand: 'Caveat', 'Kaiti SC', cursive;
+      --mono: 'Fira Code', 'SF Mono', monospace;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--sans);
+      font-size: 16px;
+      line-height: 1.75;
+      color: var(--ink);
+      background: var(--cream);
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+    }
+
+    ::selection { background: var(--yellow); color: var(--ink); }
+
+    a { color: var(--blue); text-decoration-thickness: 2px; text-underline-offset: 3px; }
+    a:hover { background: var(--yellow-soft); }
+
+    img { max-width: 100%; height: auto; display: block; }
+
+    .container { max-width: 1300px; margin: 0 auto; padding: 0 2rem; }
+
+    .label-caps {
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      font-weight: 500;
+      color: var(--ink-faint);
+      display: block;
+      margin-bottom: 0.85rem;
+    }
+
+    .section { padding: clamp(80px, 12vh, 160px) 0; }
+    .section--alt { background: var(--cream-dark); }
+
+    .section-header { margin-bottom: clamp(40px, 6vw, 80px); }
+    .section-header .section-number {
+      font-family: var(--display);
+      font-style: italic;
+      font-size: clamp(1.4rem, 3vw, 2rem);
+      color: var(--blue);
+      opacity: 0.35;
+      display: block;
+      margin-bottom: 0.25rem;
+    }
+    .section-header .section-title {
+      font-family: var(--serif);
+      font-weight: 900;
+      font-size: clamp(1.6rem, 4vw, 2.6rem);
+      line-height: 1.25;
+      letter-spacing: -0.01em;
+    }
+    .section-header .section-lead {
+      margin-top: 1rem;
+      max-width: 640px;
+      color: var(--ink-light);
+      font-size: 1rem;
+    }
+
+    /* 顶部导航 */
+    .topnav {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: rgba(254, 252, 246, 0.96);
+      border-bottom: 1px solid rgba(26, 26, 46, 0.08);
+    }
+    .topnav-inner {
+      max-width: 1300px;
+      margin: 0 auto;
+      padding: 0.75rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+    }
+    .brand-mark {
+      width: 30px;
+      height: 30px;
+      border-radius: 8px;
+      background: var(--blue);
+      color: var(--cream);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--display);
+      font-style: italic;
+      font-size: 1.05rem;
+    }
+    .nav-links { display: flex; gap: 1.25rem; flex-wrap: wrap; }
+    .nav-links a {
+      color: var(--ink-light);
+      text-decoration: none;
+      font-size: 0.82rem;
+      letter-spacing: 0.02em;
+      padding: 0.15rem 0;
+      border-bottom: 2px solid transparent;
+    }
+    .nav-links a:hover { color: var(--blue); background: transparent; border-bottom-color: var(--yellow); }
+
+    /* Hero：产品出血 */
+    .hero {
+      display: grid;
+      grid-template-columns: 0.42fr 0.58fr;
+      align-items: center;
+      gap: clamp(32px, 5vw, 72px);
+      padding: clamp(48px, 8vh, 96px) 0 clamp(40px, 6vh, 80px);
+      overflow: hidden;
+    }
+    .hero h1 {
+      font-family: var(--serif);
+      font-weight: 900;
+      font-size: clamp(2.5rem, 6vw, 4.8rem);
+      line-height: 1.08;
+      letter-spacing: -0.02em;
+    }
+    .hero h1 .en {
+      display: block;
+      font-family: var(--display);
+      font-style: italic;
+      font-weight: 400;
+      font-size: clamp(1.3rem, 2.4vw, 2rem);
+      color: var(--blue);
+      margin-bottom: 0.4rem;
+    }
+    .hero p {
+      font-size: 1.05rem;
+      color: var(--ink-light);
+      margin-top: 1.5rem;
+      max-width: 470px;
+    }
+    .hero-tags { display: flex; gap: 0.6rem; flex-wrap: wrap; margin-top: 1.75rem; }
+    .tag {
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      letter-spacing: 0.04em;
+      padding: 0.35rem 0.75rem;
+      border-radius: 999px;
+      background: var(--cream-dark);
+      border: 1px solid rgba(26, 26, 46, 0.1);
+      color: var(--ink-light);
+    }
+    .hero-visual { position: relative; }
+    .hero-visual img {
+      width: 100%;
+      border-radius: 24px 0 0 24px;
+      margin-right: -5vw;
+      box-shadow: 0 30px 80px rgba(26, 26, 46, 0.18);
+      border: 1px solid rgba(26, 26, 46, 0.06);
+    }
+    .float-pill {
+      position: absolute;
+      left: -1rem;
+      bottom: 1.25rem;
+      background: var(--cream);
+      padding: 0.55em 1em;
+      border-radius: 100px;
+      font-size: 0.8rem;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+      display: flex;
+      align-items: center;
+      gap: 0.5em;
+      color: var(--ink);
+      border: 1px solid rgba(26, 26, 46, 0.06);
+    }
+    .float-pill .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--red);
+    }
+
+    /* 声明：手写批注风 + 红色点缀 */
+    .disclaimer {
+      background: var(--cream-dark);
+      padding: clamp(56px, 8vh, 100px) 0;
+      border-top: 4px solid var(--yellow);
+      border-bottom: 4px solid var(--yellow);
+    }
+    .disclaimer-card {
+      position: relative;
+      padding: clamp(28px, 4vw, 48px);
+      background: #fffdf8;
+      border: 2px dashed rgba(232, 74, 95, 0.4);
+      border-radius: 18px;
+    }
+    .disclaimer-card .quote-badge {
+      position: absolute;
+      top: -0.85rem;
+      left: 22px;
+      font-family: var(--hand);
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--red);
+      background: var(--cream-dark);
+      padding: 0 12px;
+      letter-spacing: 0.02em;
+    }
+    .disclaimer-card h2 {
+      font-family: var(--serif);
+      font-size: clamp(1.3rem, 2.5vw, 1.8rem);
+      font-weight: 900;
+      margin-bottom: 1.25rem;
+    }
+    .disclaimer-list { list-style: none; display: grid; gap: 0.7rem; }
+    .disclaimer-list li {
+      position: relative;
+      padding-left: 1.6rem;
+      color: var(--ink-light);
+      line-height: 1.7;
+    }
+    .disclaimer-list li::before {
+      content: '!';
+      position: absolute;
+      left: 0;
+      top: 0.15rem;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: var(--red);
+      color: #fff;
+      font-size: 0.72rem;
+      font-weight: 700;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* 准备：三等分编号卡片 */
+    .prep-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: clamp(18px, 2.5vw, 30px);
+    }
+    .number-card {
+      position: relative;
+      padding: 30px 26px 26px;
+      background: #fff;
+      border-radius: 16px;
+      border: 1px solid rgba(26, 26, 46, 0.05);
+      box-shadow: 0 2px 14px rgba(0, 0, 0, 0.04);
+      overflow: hidden;
+      min-height: 210px;
+    }
+    .number-card .card-number {
+      position: absolute;
+      top: -12px;
+      right: 12px;
+      font-family: var(--display);
+      font-style: italic;
+      font-size: 5.5rem;
+      font-weight: 900;
+      color: rgba(43, 127, 216, 0.09);
+      line-height: 1;
+      pointer-events: none;
+    }
+    .number-card:nth-child(2) .card-number { color: rgba(244, 215, 88, 0.55); }
+    .number-card:nth-child(3) .card-number { color: rgba(232, 74, 95, 0.14); }
+    .number-card .card-title {
+      font-family: var(--serif);
+      font-size: 1.15rem;
+      font-weight: 900;
+      margin-bottom: 0.7rem;
+      position: relative;
+    }
+    .number-card .card-desc {
+      font-size: 0.9rem;
+      color: var(--ink-light);
+      line-height: 1.85;
+      position: relative;
+    }
+    .number-card .card-link {
+      font-family: var(--mono);
+      font-size: 0.78rem;
+      word-break: break-all;
+    }
+
+    /* Clash Verge：纵向 Step 流程 */
+    .steps-container {
+      display: flex;
+      flex-direction: column;
+      gap: clamp(32px, 4vw, 56px);
+      padding-left: 60px;
+      position: relative;
+    }
+    .steps-container::before {
+      content: '';
+      position: absolute;
+      left: 22px;
+      top: 42px;
+      bottom: 42px;
+      width: 2px;
+      border-left: 2px dashed rgba(244, 215, 88, 0.9);
+    }
+    .step-item { position: relative; }
+    .step-num {
+      position: absolute;
+      left: -60px;
+      top: 0;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: var(--blue);
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--display);
+      font-style: italic;
+      font-weight: 700;
+      font-size: 1.15rem;
+    }
+    .step-item:nth-child(3n+2) .step-num { background: var(--blue-deep); }
+    .step-item:nth-child(3n) .step-num { background: #d99f12; }
+    .step-body { padding-top: 0.35rem; }
+    .step-body h3 {
+      font-family: var(--serif);
+      font-size: 1.35rem;
+      font-weight: 900;
+      margin-bottom: 0.5rem;
+    }
+    .step-body > p { color: var(--ink-light); max-width: 720px; margin-bottom: 1.2rem; }
+    .figure { margin-top: 1.1rem; }
+    .figure img {
+      width: 100%;
+      border-radius: 14px;
+      border: 1px solid rgba(26, 26, 46, 0.08);
+      box-shadow: 0 6px 24px rgba(0, 0, 0, 0.07);
+      background: #fff;
+    }
+    .figure figcaption {
+      font-size: 0.8rem;
+      color: var(--ink-faint);
+      margin-top: 0.55rem;
+      display: flex;
+      align-items: center;
+      gap: 0.45rem;
+    }
+    .figure figcaption::before {
+      content: '';
+      width: 16px;
+      height: 2px;
+      background: var(--yellow);
+    }
+    .figure-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.1rem; }
+    .platform-tag {
+      display: inline-block;
+      font-family: var(--mono);
+      font-size: 0.68rem;
+      letter-spacing: 0.08em;
+      padding: 0.15rem 0.55rem;
+      border-radius: 999px;
+      background: rgba(43, 127, 216, 0.1);
+      color: var(--blue);
+      margin-bottom: 0.45rem;
+    }
+
+    /* Shadowrocket：横向 Step 连接线 */
+    .steps-layout {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0;
+      position: relative;
+    }
+    .steps-layout::before {
+      content: '';
+      position: absolute;
+      top: 28px;
+      left: 30px;
+      right: 30px;
+      height: 3px;
+      background: linear-gradient(90deg, var(--yellow), var(--blue));
+    }
+    .step-card { padding: 0 1.1rem; text-align: left; }
+    .step-dot {
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      background: var(--blue);
+      color: #fff;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--display);
+      font-style: italic;
+      font-size: 1.15rem;
+      font-weight: 700;
+      position: relative;
+      z-index: 1;
+      margin-bottom: 1.1rem;
+    }
+    .step-card h4 {
+      font-family: var(--serif);
+      font-size: 1.08rem;
+      font-weight: 900;
+      margin-bottom: 0.5rem;
+    }
+    .step-card p { font-size: 0.9rem; color: var(--ink-light); line-height: 1.8; }
+    .shot {
+      margin-top: 1rem;
+      max-width: 290px;
+      border-radius: 22px;
+      border: 5px solid #fff;
+      box-shadow: 0 10px 32px rgba(0, 0, 0, 0.12);
+    }
+
+    /* Android：Sticky 侧栏 + 杂志步骤卡 */
+    .layout-sticky-mag {
+      display: grid;
+      grid-template-columns: 220px 1fr;
+      gap: clamp(32px, 4vw, 56px);
+      align-items: start;
+    }
+    .mag-sidebar { position: sticky; top: 88px; align-self: start; }
+    .mag-sidebar .sidebar-label {
+      font-family: var(--mono);
+      font-size: 0.68rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--ink-faint);
+      margin-bottom: 0.75rem;
+    }
+    .mag-nav { list-style: none; }
+    .mag-nav li {
+      display: flex;
+      align-items: baseline;
+      gap: 12px;
+      padding: 0.65rem 0;
+      font-size: 0.85rem;
+      color: var(--ink-faint);
+      cursor: pointer;
+      transition: color 0.3s ease;
+    }
+    .mag-nav li::before {
+      content: attr(data-num);
+      font-family: var(--display);
+      font-style: italic;
+      font-size: 1.35rem;
+      font-weight: 900;
+      color: rgba(43, 127, 216, 0.18);
+      min-width: 30px;
+      transition: color 0.3s ease;
+    }
+    .mag-nav li.active { color: var(--ink); font-weight: 700; }
+    .mag-nav li.active::before { color: var(--blue); }
+    .mag-steps { display: flex; flex-direction: column; gap: clamp(28px, 3vw, 44px); }
+    .mag-step {
+      background: #fff;
+      border-radius: 18px;
+      overflow: hidden;
+      border: 1px solid rgba(26, 26, 46, 0.05);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+      display: grid;
+      grid-template-columns: 1fr minmax(180px, 280px);
+      align-items: center;
+      gap: clamp(20px, 3vw, 36px);
+      padding: clamp(24px, 3vw, 36px);
+    }
+    .mag-step .mag-text .mag-num {
+      font-family: var(--display);
+      font-style: italic;
+      font-size: 2.6rem;
+      font-weight: 900;
+      line-height: 1;
+      color: rgba(43, 127, 216, 0.18);
+      display: block;
+      margin-bottom: 0.5rem;
+    }
+    .mag-step:nth-child(3n+2) .mag-num { color: rgba(244, 215, 88, 0.75); }
+    .mag-step:nth-child(3n) .mag-num { color: rgba(232, 74, 95, 0.28); }
+    .mag-step h4 {
+      font-family: var(--serif);
+      font-size: 1.28rem;
+      font-weight: 900;
+      margin-bottom: 0.5rem;
+    }
+    .mag-step p { font-size: 0.92rem; color: var(--ink-light); line-height: 1.85; }
+    .mag-step .mag-figure img {
+      border-radius: 16px;
+      border: 1px solid rgba(26, 26, 46, 0.08);
+      box-shadow: 0 8px 26px rgba(0, 0, 0, 0.08);
+      margin: 0 auto;
+    }
+
+    /* 代理更新：对称双栏 */
+    .notice { margin-bottom: clamp(36px, 5vw, 64px); }
+    .quote-note {
+      position: relative;
+      padding: 26px 28px;
+      background: #fff;
+      border-radius: 14px;
+      border: 1.5px dashed rgba(43, 127, 216, 0.32);
+    }
+    .quote-note .quote-note-tag {
+      position: absolute;
+      top: -0.7rem;
+      left: 20px;
+      font-family: var(--hand);
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--blue);
+      background: var(--cream);
+      padding: 0 10px;
+    }
+    .note-list { list-style: none; display: grid; gap: 0.6rem; }
+    .note-list li {
+      position: relative;
+      padding-left: 1.4rem;
+      color: var(--ink-light);
+      font-size: 0.94rem;
+      line-height: 1.85;
+    }
+    .note-list li::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0.55em;
+      width: 8px;
+      height: 8px;
+      border-radius: 2px;
+      background: var(--yellow);
+      border: 1.5px solid #c9a10d;
+    }
+    .update-split { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(20px, 3vw, 32px); }
+    .update-panel {
+      background: #fff;
+      border-radius: 18px;
+      padding: clamp(24px, 3vw, 36px);
+      border: 1px solid rgba(26, 26, 46, 0.05);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+    }
+    .update-panel h3 {
+      font-family: var(--serif);
+      font-size: 1.2rem;
+      font-weight: 900;
+      margin-bottom: 0.4rem;
+    }
+    .update-panel .update-sub {
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      letter-spacing: 0.08em;
+      color: var(--ink-faint);
+      text-transform: uppercase;
+      margin-bottom: 1.2rem;
+    }
+    .update-panel .figure + .figure { margin-top: 1.1rem; }
+
+    /* 常见问题：深色面板 */
+    .dark-section {
+      background: var(--dark-panel);
+      color: #e6e8f0;
+      padding: clamp(80px, 12vh, 150px) 0;
+    }
+    .dark-section .section-header .section-number { color: var(--yellow); opacity: 0.5; }
+    .dark-section .section-header .section-title { color: #f6f7fb; }
+    .dark-section .section-header .section-lead { color: #9aa1b5; }
+    .faq-list { list-style: none; display: grid; gap: clamp(18px, 3vw, 28px); }
+    .faq-list > li {
+      position: relative;
+      padding: 22px 24px 22px 54px;
+      background: rgba(255, 255, 255, 0.04);
+      border-radius: 14px;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      line-height: 1.8;
+    }
+    .faq-list > li::before {
+      content: attr(data-index);
+      position: absolute;
+      left: 16px;
+      top: 20px;
+      font-family: var(--display);
+      font-style: italic;
+      font-size: 1.5rem;
+      font-weight: 900;
+      color: var(--yellow);
+    }
+    .faq-list .sub-list { list-style: none; margin-top: 0.75rem; display: grid; gap: 0.4rem; }
+    .faq-list .sub-list li {
+      position: relative;
+      padding-left: 1.2rem;
+      color: #aeb4c6;
+      font-size: 0.92rem;
+    }
+    .faq-list .sub-list li::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0.6em;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--blue);
+    }
+    .faq-list .mini-shot {
+      max-width: 300px;
+      border-radius: 12px;
+      margin-top: 1rem;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    /* 操作类教程：编号卡片 */
+    .ops { display: grid; gap: clamp(28px, 4vw, 44px); }
+    .op-block {
+      background: #fff;
+      border-radius: 18px;
+      padding: clamp(26px, 3.5vw, 40px);
+      border: 1px solid rgba(26, 26, 46, 0.05);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+    }
+    .op-block .op-head { display: flex; align-items: baseline; gap: 1rem; margin-bottom: 1rem; }
+    .op-block .op-head .op-num {
+      font-family: var(--display);
+      font-style: italic;
+      font-weight: 900;
+      font-size: 2rem;
+      color: rgba(43, 127, 216, 0.25);
+    }
+    .op-block h3 { font-family: var(--serif); font-size: 1.3rem; font-weight: 900; }
+    .op-block > p { color: var(--ink-light); margin-bottom: 1.2rem; }
+    .op-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
+    .op-grid.cols-2 { grid-template-columns: repeat(2, 1fr); }
+    .op-grid .figure { margin-top: 0; }
+
+    /* CTA / footer */
+    .cta {
+      background:
+        radial-gradient(ellipse at 15% 20%, rgba(244, 215, 88, 0.18), transparent 55%),
+        var(--cream);
+      padding: clamp(80px, 12vh, 150px) 0;
+    }
+    .cta-card {
+      background: #fff;
+      border-radius: 22px;
+      padding: clamp(30px, 5vw, 56px);
+      box-shadow: 0 20px 70px rgba(0, 0, 0, 0.08);
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: clamp(28px, 4vw, 56px);
+      align-items: center;
+      overflow: hidden;
+    }
+    .cta-card h2 {
+      font-family: var(--serif);
+      font-size: clamp(1.7rem, 4vw, 2.8rem);
+      font-weight: 900;
+      line-height: 1.2;
+      margin-bottom: 0.8rem;
+    }
+    .cta-card p { color: var(--ink-light); line-height: 1.9; margin-bottom: 0.8rem; }
+    .cta-badge {
+      display: inline-block;
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      letter-spacing: 0.08em;
+      padding: 0.3rem 0.7rem;
+      border-radius: 999px;
+      background: var(--yellow);
+      color: var(--ink);
+      font-weight: 700;
+      margin-bottom: 1.2rem;
+    }
+    .cta-visual img {
+      border-radius: 16px;
+      box-shadow: 0 16px 46px rgba(0, 0, 0, 0.14);
+    }
+    .wechat-row {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-top: 1.5rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid rgba(26, 26, 46, 0.08);
+    }
+    .wechat-row img {
+      width: 84px;
+      height: 84px;
+      border-radius: 12px;
+      border: 1px solid rgba(26, 26, 46, 0.08);
+    }
+    .wechat-row .wx-label { font-size: 0.9rem; color: var(--ink-light); }
+    .wechat-row .wx-label strong { color: var(--ink); }
+
+    .site-footer {
+      padding: 40px 0;
+      text-align: center;
+      border-top: 1px solid rgba(26, 26, 46, 0.08);
+      color: var(--ink-faint);
+      font-size: 0.82rem;
+      line-height: 1.9;
+    }
+    .site-footer a { color: var(--ink-faint); }
+
+    /* 高亮 */
+    .hl-yellow {
+      background: linear-gradient(180deg, transparent 60%, rgba(244, 215, 88, 0.45) 60%);
+      padding: 0 4px;
+      border-radius: 2px;
+    }
+    .hl-blue {
+      text-decoration: underline wavy var(--blue);
+      text-underline-offset: 4px;
+      text-decoration-thickness: 1.5px;
+    }
+    .hl-red { color: var(--red); font-weight: 700; }
+    .accent-amber {
+      background: var(--yellow-soft);
+      color: #7a5c00;
+      padding: 0.05em 0.35em;
+      border-radius: 5px;
+      font-weight: 600;
+      box-decoration-break: clone;
+    }
+    .keyword {
+      background: rgba(255, 217, 61, 0.28);
+      padding: 0.05em 0.4em;
+      border-radius: 6px;
+      font-weight: 700;
+      box-decoration-break: clone;
+    }
+
+    /* Scroll Reveal */
+    .reveal {
+      opacity: 0;
+      transform: translateY(32px);
+      transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1),
+                  transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .reveal.visible { opacity: 1; transform: none; }
+    .reveal-d1 { transition-delay: 0.08s; }
+    .reveal-d2 { transition-delay: 0.16s; }
+    .reveal-d3 { transition-delay: 0.24s; }
+    .reveal-d4 { transition-delay: 0.32s; }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      .reveal { opacity: 1; transform: none; transition: none; }
+    }
+
+    /* 响应式 */
+    @media (max-width: 900px) {
+      .nav-links { display: none; }
+      .hero { grid-template-columns: 1fr; padding-top: 3rem; }
+      .hero-visual img { margin-right: 0; border-radius: 18px; }
+      .float-pill { left: 0.75rem; bottom: 0.75rem; }
+      .prep-grid { grid-template-columns: 1fr; }
+      .figure-grid { grid-template-columns: 1fr; }
+      .steps-layout { grid-template-columns: 1fr; gap: 2rem; }
+      .steps-layout::before { display: none; }
+      .layout-sticky-mag { grid-template-columns: 1fr; }
+      .mag-sidebar { position: static; display: none; }
+      .mag-step { grid-template-columns: 1fr; }
+      .update-split { grid-template-columns: 1fr; }
+      .op-grid, .op-grid.cols-2 { grid-template-columns: 1fr; }
+      .cta-card { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 600px) {
+      body { font-size: 15px; }
+      .steps-container { padding-left: 0; }
+      .steps-container::before { display: none; }
+      .step-num { position: static; margin-bottom: 0.75rem; }
+      .faq-list > li { padding-left: 20px; }
+      .faq-list > li::before { position: static; display: block; margin-bottom: 0.25rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="topnav">
+    <div class="topnav-inner">
+      <div class="brand">
+        <span class="brand-mark">B</span>
+        <span>bornforthis · 教程</span>
+      </div>
+      <div class="nav-links">
+        <a href="#prep">准备</a>
+        <a href="#clashverge">Clash Verge</a>
+        <a href="#shadowrocket">Shadowrocket</a>
+        <a href="#android">安卓</a>
+        <a href="#update">更新</a>
+        <a href="#faq">常见问题</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <header class="hero container">
+    <div class="hero-text reveal">
+      <span class="label-caps">Tutorial · Network Tools</span>
+      <h1><span class="en">Getting started</span>Clash Verge &amp; Shadowrocket 上手教程</h1>
+      <p>从下载安装到订阅配置，一次讲清 Windows、macOS、iPhone 与安卓四端的上网代理设置。跟着步骤走，几分钟就能连上。</p>
+      <div class="hero-tags">
+        <span class="tag">Windows</span>
+        <span class="tag">macOS</span>
+        <span class="tag">iOS</span>
+        <span class="tag">Android</span>
+      </div>
+    </div>
+    <div class="hero-visual reveal reveal-d1">
+      <img src="assets/mac-launch-1.png" alt="Clash Verge 在 Mac 上启动后的界面" loading="eager">
+      <div class="float-pill"><span class="dot"></span>订阅后可直接生成二维码</div>
+    </div>
+  </header>
+
+  <!-- 声明 -->
+  <section class="disclaimer">
+    <div class="container">
+      <div class="disclaimer-card reveal">
+        <span class="quote-badge">重要声明 ⚠️</span>
+        <h2>仅供学习交流使用</h2>
+        <ul class="disclaimer-list">
+          <li>切勿使用代理参与任何政治评论。</li>
+          <li>国安局在看着每一个人，不是你使用 🪜 他们就不知道。</li>
+          <li>本梯子已停止对外出售，仅限使用过的用户（严格收缩）。</li>
+          <li>本人新书上市，买书送半年，好评再送半年，有意者联系购买即可。</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- 准备：下载 & 登录 -->
+  <section class="section" id="prep">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="section-number">01</span>
+        <h2 class="section-title">准备：下载 &amp; 登录</h2>
+        <p class="section-lead">开始之前，先把安装包下载好、把订阅链接拿到手。</p>
+      </div>
+      <div class="prep-grid">
+        <div class="number-card reveal reveal-d1">
+          <span class="card-number">1</span>
+          <h3 class="card-title">下载安装包</h3>
+          <p class="card-desc">安装不做教程，安装软件很简单，直接默认安装即可。</p>
+          <p class="card-desc"><a class="card-link" href="https://47.99.93.138:38742/down/l8xHmGaPU0oX">打开下载地址</a></p>
+        </div>
+        <div class="number-card reveal reveal-d2">
+          <span class="card-number">2</span>
+          <h3 class="card-title">获取订阅链接</h3>
+          <p class="card-desc">会直接发给你专属订阅链接。保留好，后面每一步都要用到。</p>
+        </div>
+        <div class="number-card reveal reveal-d3">
+          <span class="card-number">3</span>
+          <h3 class="card-title">生成订阅二维码</h3>
+          <p class="card-desc">Shadowrocket 需要二维码，可自行找网站把链接生成二维码；Clash Verge 订阅后也支持直接生成「订阅二维码」。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Clash Verge -->
+  <section class="section section--alt" id="clashverge">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="section-number">02</span>
+        <h2 class="section-title">桌面端：Clash Verge 配置订阅</h2>
+        <p class="section-lead">Windows 与 macOS 的操作完全一致，照着下面四步走即可。</p>
+      </div>
+
+      <div class="steps-container">
+        <div class="step-item reveal">
+          <span class="step-num">1</span>
+          <div class="step-body">
+            <h3>启动软件</h3>
+            <p>找到 Clash Verge 双击启动。启动后有可能不会直接显示程序界面，手动点开图标进入仪表盘即可。</p>
+            <div class="figure-grid">
+              <figure class="figure">
+                <span class="platform-tag">macOS</span>
+                <img src="assets/mac-launch-1.png" alt="Mac 启动 Clash Verge" loading="lazy">
+                <figcaption>Mac：启动 Clash Verge</figcaption>
+              </figure>
+              <figure class="figure">
+                <span class="platform-tag">Windows</span>
+                <img src="assets/win-launch-1.png" alt="Windows 双击启动 Clash Verge" loading="lazy">
+                <figcaption>Windows：找到 Clash Verge 双击启动</figcaption>
+              </figure>
+            </div>
+            <div class="figure-grid" style="margin-top:1.1rem;">
+              <figure class="figure">
+                <span class="platform-tag">macOS 手动打开</span>
+                <img src="assets/mac-launch-manual-1.png" alt="Mac 手动打开 Clash Verge 仪表盘" loading="lazy">
+                <img src="assets/mac-launch-manual-2.png" alt="Mac 仪表盘成功启动" loading="lazy" style="margin-top:0.7rem;">
+                <figcaption>这样就启动好了仪表盘</figcaption>
+              </figure>
+              <figure class="figure">
+                <span class="platform-tag">Windows 手动打开</span>
+                <img src="assets/win-launch-manual-1.png" alt="Windows 手动打开 Clash Verge 仪表盘" loading="lazy">
+                <img src="assets/win-launch-manual-2.png" alt="Windows 仪表盘成功启动" loading="lazy" style="margin-top:0.7rem;">
+                <figcaption>Windows 仪表盘成功启动</figcaption>
+              </figure>
+            </div>
+          </div>
+        </div>
+
+        <div class="step-item reveal">
+          <span class="step-num">2</span>
+          <div class="step-body">
+            <h3>添加订阅</h3>
+            <p>拿到专属订阅链接后，在 Clash Verge 中添加订阅。</p>
+            <div class="figure-grid">
+              <figure class="figure">
+                <img src="assets/add-subscription-1.png" alt="添加订阅步骤一" loading="lazy">
+              </figure>
+              <figure class="figure">
+                <img src="assets/add-subscription-2.png" alt="添加订阅步骤二" loading="lazy">
+              </figure>
+            </div>
+          </div>
+        </div>
+
+        <div class="step-item reveal">
+          <span class="step-num">3</span>
+          <div class="step-body">
+            <h3>设置选项</h3>
+            <p>点击「设置」选项进行配置，<span class="keyword">把打勾的都打开</span>。</p>
+            <div class="figure-grid">
+              <figure class="figure">
+                <img src="assets/settings-1.png" alt="点击设置选项" loading="lazy">
+              </figure>
+              <figure class="figure">
+                <img src="assets/settings-check.png" alt="把打勾的都打开" loading="lazy">
+                <figcaption>把打勾的都打开</figcaption>
+              </figure>
+            </div>
+          </div>
+        </div>
+
+        <div class="step-item reveal">
+          <span class="step-num">4</span>
+          <div class="step-body">
+            <h3>全部完成 ✅</h3>
+            <p>到此，全部完成。你的代理可以正常使用了。</p>
+            <div class="quote-note" style="max-width:720px; margin-top:1rem;">
+              <span class="quote-note-tag">小提醒 🔑</span>
+              <p style="color:var(--ink-light); font-size:0.94rem; line-height:1.85;">如果一开始不会、不研究，后期梯子出现各种问题该怎么办？——靠自己，从一开始就学会排查。支持付费配置 30¥/次（不推荐）。</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Shadowrocket -->
+  <section class="section" id="shadowrocket">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="section-number">03</span>
+        <h2 class="section-title">iPhone：Shadowrocket 配置订阅</h2>
+        <p class="section-lead">苹果手机相对简单，三步完成扫码订阅并开启代理。</p>
+      </div>
+
+      <div class="steps-layout">
+        <div class="step-card reveal">
+          <span class="step-dot">1</span>
+          <h4>打开 Shadowrocket</h4>
+          <p>打开软件后，点击左上角的扫码按钮。</p>
+          <img class="shot" src="assets/shadowrocket-open.jpg" alt="打开 Shadowrocket 点击扫码" loading="lazy">
+        </div>
+        <div class="step-card reveal reveal-d1">
+          <span class="step-dot">2</span>
+          <h4>登录订阅网站</h4>
+          <p>推荐：Clash Verge 订阅后直接生成「订阅二维码」。也可以拿订阅链接到 goqr.me 生成二维码。</p>
+          <figure class="figure">
+            <img src="assets/share-qrcode.png" alt="鼠标右键分享二维码" loading="lazy">
+            <figcaption>鼠标右键、分享二维码</figcaption>
+          </figure>
+          <img class="shot" src="assets/goqr.png" alt="使用 goqr.me 生成二维码" loading="lazy" style="margin-top:1rem;">
+        </div>
+        <div class="step-card reveal reveal-d2">
+          <span class="step-dot">3</span>
+          <h4>开启代理</h4>
+          <p>扫码之后，点击「未连接」的按钮，即可打开代理。</p>
+          <img class="shot" src="assets/shadowrocket-proxy.png" alt="点击未连接开启代理" loading="lazy">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Android -->
+  <section class="section section--alt" id="android">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="section-number">04</span>
+        <h2 class="section-title">安卓：Clash for Android 教程</h2>
+        <p class="section-lead">订阅链接已经直接发给你，按下面七步配置并开启连接。</p>
+      </div>
+
+      <div class="layout-sticky-mag">
+        <div class="mag-sidebar">
+          <div class="sidebar-label">配置流程</div>
+          <ul class="mag-nav">
+            <li data-num="01" class="active">收到订阅链接</li>
+            <li data-num="02">打开配置</li>
+            <li data-num="03">新建配置</li>
+            <li data-num="04">从 URL 导入</li>
+            <li data-num="05">填写名称与链接</li>
+            <li data-num="06">选中并返回</li>
+            <li data-num="07">开启连接</li>
+          </ul>
+        </div>
+
+        <div class="mag-steps">
+          <div class="mag-step step-observe" data-index="0">
+            <div class="mag-text">
+              <span class="mag-num">01</span>
+              <h4>收到订阅链接</h4>
+              <p>订阅链接已经直接发给你，后面从 URL 导入时粘贴即可。</p>
+            </div>
+            <div class="mag-figure"></div>
+          </div>
+
+          <div class="mag-step step-observe" data-index="1">
+            <div class="mag-text">
+              <span class="mag-num">02</span>
+              <h4>打开配置</h4>
+              <p>手机上打开 Clash，选择「配置」。</p>
+            </div>
+            <div class="mag-figure">
+              <img src="assets/android-step2.png" alt="打开 Clash 选择配置" loading="lazy">
+            </div>
+          </div>
+
+          <div class="mag-step step-observe" data-index="2">
+            <div class="mag-text">
+              <span class="mag-num">03</span>
+              <h4>新建配置</h4>
+              <p>选择「+ 新配置」。</p>
+            </div>
+            <div class="mag-figure">
+              <img src="assets/android-step3.png" alt="选择新配置" loading="lazy">
+            </div>
+          </div>
+
+          <div class="mag-step step-observe" data-index="3">
+            <div class="mag-text">
+              <span class="mag-num">04</span>
+              <h4>从 URL 导入</h4>
+              <p>选择「从 URL 导入」。</p>
+            </div>
+            <div class="mag-figure">
+              <img src="assets/android-step4.png" alt="选择从 URL 导入" loading="lazy">
+            </div>
+          </div>
+
+          <div class="mag-step step-observe" data-index="4">
+            <div class="mag-text">
+              <span class="mag-num">05</span>
+              <h4>填写名称与链接</h4>
+              <p><span class="accent-amber">名称不用叫 igg，直接改成 bornforthis</span>；<span class="accent-amber">链接就是订阅网站复制的</span>；自动更新随意，推荐手动更新。</p>
+            </div>
+            <div class="mag-figure">
+              <img src="assets/android-step5.png" alt="填写名称与链接" loading="lazy">
+            </div>
+          </div>
+
+          <div class="mag-step step-observe" data-index="5">
+            <div class="mag-text">
+              <span class="mag-num">06</span>
+              <h4>选中并返回</h4>
+              <p>选中 bornforthis，然后返回。</p>
+            </div>
+            <div class="mag-figure">
+              <img src="assets/android-step6.png" alt="选中 bornforthis 并返回" loading="lazy">
+            </div>
+          </div>
+
+          <div class="mag-step step-observe" data-index="6">
+            <div class="mag-text">
+              <span class="mag-num">07</span>
+              <h4>开启连接</h4>
+              <p>点击「已停止」按钮开启 VPN 连接，显示<span class="keyword">运行中</span>就代表连接成功。</p>
+            </div>
+            <div class="mag-figure">
+              <img src="assets/android-step7-stopped.png" alt="点击已停止开启连接" loading="lazy">
+              <img src="assets/android-step7-running.png" alt="显示运行中连接成功" loading="lazy" style="margin-top:0.7rem;">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 代理更新 -->
+  <section class="section" id="update">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="section-number">05</span>
+        <h2 class="section-title">代理更新相关</h2>
+        <p class="section-lead">订阅不用反复刷新，必要时按设备手动更新即可。</p>
+      </div>
+
+      <div class="notice reveal">
+        <div class="quote-note">
+          <span class="quote-note-tag">更新须知 📌</span>
+          <ul class="note-list">
+            <li>不理解的内容，复制去 AI 里解释。</li>
+            <li>现在 Clash Verge 已经支持显示有效期（手机也支持查看）。</li>
+            <li>只要代理信息没有更新，刷新 1 次和 100 次都一样，不会因为多刷新几次就拿到最新数据。</li>
+            <li>没有去做流量显示，不用 care。</li>
+          </ul>
+          <img class="mini-shot" src="assets/no-traffic.png" alt="没有做流量显示" loading="lazy" style="margin-top:1rem; max-width:320px;">
+        </div>
+      </div>
+
+      <div class="update-split">
+        <div class="update-panel reveal reveal-d1">
+          <h3>电脑手动更新</h3>
+          <div class="update-sub">Windows / macOS</div>
+          <figure class="figure">
+            <img src="assets/expiry-pc.png" alt="电脑端显示有效期" loading="lazy">
+            <figcaption>电脑端可查看订阅有效期</figcaption>
+          </figure>
+          <figure class="figure">
+            <img src="assets/update-pc.png" alt="电脑手动更新订阅" loading="lazy">
+            <figcaption>电脑手动更新订阅</figcaption>
+          </figure>
+        </div>
+        <div class="update-panel reveal reveal-d2">
+          <h3>手机手动更新</h3>
+          <div class="update-sub">iPhone / Android</div>
+          <figure class="figure">
+            <img src="assets/expiry-phone.png" alt="手机端显示有效期" loading="lazy">
+            <figcaption>手机端可查看订阅有效期</figcaption>
+          </figure>
+          <figure class="figure">
+            <img src="assets/update-iphone.png" alt="手机手动更新订阅" loading="lazy">
+            <figcaption>手机手动更新订阅</figcaption>
+          </figure>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 常见问题 -->
+  <section class="dark-section" id="faq">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="section-number">06</span>
+        <h2 class="section-title">常见问题 · 必看</h2>
+        <p class="section-lead">先把通用公告读一遍，遇到访问异常再对照排查。</p>
+      </div>
+
+      <ul class="faq-list">
+        <li data-index="01" class="reveal">开启代理：更新完记得开代理。有人更新完了没开代理，却说不能用。</li>
+        <li data-index="02" class="reveal">代理不需要特意关闭，除非访问国内某些网站不能正常使用，不然可以一直挂着。</li>
+        <li data-index="03" class="reveal"><span class="accent-amber" style="color:#7a5c00;">这个 🪜 我也在用，有问题我会第一时间解决，其余请自行排查网络相关。</span></li>
+        <li data-index="04" class="reveal"><span class="hl-red">所有节点都 timeout 时，先考虑手动更新代理订阅。</span>如果点击手动刷新后显示失败，八成是网络问题或订阅到期。刷新成功后还都 timeout，再考虑自己的网络问题。
+          <ul class="sub-list">
+            <li>不要觉得手动更新麻烦，我自己也在用梯子，速率慢或失效都会第一时间维护；因为是不定期维护，所以不能用时请手动刷新（保证高可用的根本）。</li>
+            <li>如果手动更新失败，先把代理关闭再尝试更新（前提是梯子没过期）。本地代理失效时，用失效的代理去请求更新，有时仍会失败。</li>
+          </ul>
+        </li>
+        <li data-index="05" class="reveal">Apple Store 更换 ID 教程：<a href="https://blog.csdn.net/qq_33254766/article/details/130761916" style="color:var(--yellow);">点此查看</a>。更换完成后自行安装 Shadowrocket，它是 iOS 平台相对稳定且更新多年的 App，支持协议众多。</li>
+        <li data-index="06" class="reveal"><span class="hl-red">如果遇到某些网站无法访问</span>——首先说明：<span class="accent-amber" style="color:#7a5c00;">绝不可能是代理问题</span>。自行切换节点测试，切换前先点击测速按钮；并与当前宽带（品牌、速率、设备）及地区相关，推荐直接使用<span class="keyword">中国电信</span>。
+          <div class="figure-grid" style="grid-template-columns:1fr 1fr; gap:1rem;">
+            <img class="mini-shot" src="assets/speedtest-pc.png" alt="电脑测速按钮" loading="lazy" style="max-width:100%;">
+            <img class="mini-shot" src="assets/speedtest-iphone.png" alt="iPhone 测试按钮" loading="lazy" style="max-width:100%;">
+          </div>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- 操作类教程 -->
+  <section class="section section--alt">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="section-number">07</span>
+        <h2 class="section-title">操作类教程</h2>
+        <p class="section-lead">针对 Windows 系统代理、客户端更新和 Mac 自启的补充说明。</p>
+      </div>
+
+      <div class="ops">
+        <div class="op-block reveal">
+          <div class="op-head">
+            <span class="op-num">1</span>
+            <h3>Windows 11 如何关闭代理服务器</h3>
+          </div>
+          <p>如果出现网络问题，推荐手动关闭 Windows 的代理后，再手动开关一次 Clash Verge 的系统代理。其它 Windows 系统操作一致。</p>
+          <div class="op-grid">
+            <figure class="figure">
+              <img src="assets/win-proxy-1.png" alt="设置网络和 Internet 代理" loading="lazy">
+              <figcaption>设置 → 网络和 Internet → 代理</figcaption>
+            </figure>
+            <figure class="figure">
+              <img src="assets/win-proxy-2.png" alt="点击设置" loading="lazy">
+              <figcaption>点击设置</figcaption>
+            </figure>
+            <figure class="figure">
+              <img src="assets/win-proxy-3.png" alt="关闭并保存" loading="lazy">
+              <figcaption>关闭，保存</figcaption>
+            </figure>
+          </div>
+          <p style="margin-top:1.2rem;"><span class="accent-amber">到这一步，就可以再次去手动开关一次系统代理。</span></p>
+        </div>
+
+        <div class="op-block reveal">
+          <div class="op-head">
+            <span class="op-num">2</span>
+            <h3>客户端软件更新</h3>
+          </div>
+          <p>Clash Verge 支持直接更新，注意需要在代理打开的情况下进行，默认一步步安装即可。<span class="accent-amber">如果直接更新失败，在正常使用代理的情况下，可自行去 GitHub 下载最新版覆盖安装。</span></p>
+          <div class="op-grid cols-2">
+            <figure class="figure"><img src="assets/client-update-1.png" alt="第一步" loading="lazy"><figcaption>第一步</figcaption></figure>
+            <figure class="figure"><img src="assets/client-update-2.png" alt="第二步" loading="lazy"><figcaption>第二步</figcaption></figure>
+            <figure class="figure"><img src="assets/client-update-3.png" alt="第三步：等待更新" loading="lazy"><figcaption>第三步：等待更新</figcaption></figure>
+            <figure class="figure"><img src="assets/client-update-4.png" alt="第四步" loading="lazy"><figcaption>第四步</figcaption></figure>
+            <figure class="figure"><img src="assets/client-update-5.png" alt="第五步" loading="lazy"><figcaption>第五步</figcaption></figure>
+            <figure class="figure"><img src="assets/client-update-6.png" alt="第六步" loading="lazy"><figcaption>第六步</figcaption></figure>
+          </div>
+        </div>
+
+        <div class="op-block reveal">
+          <div class="op-head">
+            <span class="op-num">3</span>
+            <h3>Mac 开机自启问题</h3>
+          </div>
+          <p>Mac 电脑中，如果 Clash 设置了开机自启，有时重启或开机后 Clash 会弹出如下窗口：</p>
+          <figure class="figure" style="max-width:360px;">
+            <img src="assets/mac-autostart.png" alt="Mac 开机自启弹出窗口" loading="lazy">
+          </figure>
+          <p style="margin-top:1rem;"><span class="hl-red">不要点击 Reopen，要点击 Don't Reopen</span>，然后自己点开软件正常启动即可。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA / footer -->
+  <section class="cta">
+    <div class="container">
+      <div class="cta-card reveal">
+        <div class="cta-text">
+          <span class="cta-badge">AI悦创 · 编程一对一</span>
+          <h2>有问题，随时响应</h2>
+          <p>推出辅导班：Python、C++、Java、算法/数据结构、少儿编程、pygame、Linux、Web 全栈，全部一对一教学；另有线下线上摄影、Photoshop、Premiere 一对一。QQ、微信在线，随时响应。</p>
+          <p><strong style="color:var(--ink);">微信：Jiabcdefh</strong></p>
+          <div class="wechat-row">
+            <img src="assets/wechat-qr.jpg" alt="公众号 AI悦创二维码" loading="lazy">
+            <div class="wx-label">公众号 <strong>AI悦创</strong><br>扫码关注，长期更新 C++ 信息奥赛题解</div>
+          </div>
+        </div>
+        <div class="cta-visual">
+          <img src="assets/final.png" alt="AI悦创 编程一对一" loading="lazy">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>内容作者：AI悦创 · 仅供学习交流使用</p>
+      <p>Design system © <a href="https://github.com/esthersjw/esther-design-system" target="_blank" rel="noopener">ESTHER不二 · esther-design-system</a> · CC BY-NC-SA 4.0</p>
+    </div>
+  </footer>
+
+  <script>
+    // Scroll Reveal
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12 });
+    document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+    // Android 侧栏滚动联动高亮
+    const navItems = document.querySelectorAll('.mag-nav li');
+    const stepObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const idx = parseInt(entry.target.dataset.index, 10);
+          navItems.forEach((li, i) => li.classList.toggle('active', i === idx));
+        }
+      });
+    }, { threshold: 0.4, rootMargin: '-15% 0px -50% 0px' });
+    document.querySelectorAll('.step-observe').forEach(el => stepObserver.observe(el));
+  </script>
+<!-- © ESTHER不二 esthersjw/esther-design-system CC BY-NC 4.0 -->
+<section style="position:absolute;left:-9999px;font-size:0;line-height:0;opacity:0;height:0;overflow:hidden;">esthersjw-design-system</section>
+</body>
+</html>
